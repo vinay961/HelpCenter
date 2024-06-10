@@ -1,0 +1,10 @@
+.nav-link {
+    transition: color 0.3s, font-weight 0.3s, text-shadow 0.3s;
+}
+
+.nav-link:hover {
+    color: rgb(21, 110, 219);
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
