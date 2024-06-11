@@ -8,7 +8,7 @@ function Home() {
     return (
         <>
             <Nav />
-            <div className="flex flex-col items-center  bg-gray-300 body">
+            <div className="flex flex-col items-center  body">
                 <h1 className="text-3xl font-bold mb-6 mt-116">Discover Rooms by Location</h1>
                 <div className="flex gap-2">
                     <input
@@ -24,7 +24,7 @@ function Home() {
                     </button>
                 </div>
                 <Testimonial />
-                <footer className="flex flex-col items-center justify-center text-center text-gray-600 text-sm mt-auto p-4">
+                <footer className="flex flex-col items-center justify-center text-center text-gray-600 text-m mt-auto p-4">
                 <div className="flex">
                     <a href="https://github.com/vinay961" target="_blank" rel="noopener noreferrer" className="mr-4">
                         <FaGithub size={24} />

@@ -7,7 +7,7 @@ function About() {
     return(
         <>
             <Nav />
-            <div className="bg-gray-300 aboutbody">
+            <div className="aboutbody">
                 
             </div>
         </>
