@@ -4,6 +4,22 @@ import { ApiResponse } from '../utils/ApiResponse.js'
 
 import {User} from '../models/user.model.js'
 
+const generateAccessToken = async(userId) =>{
+    try{
+        const user = await User.findById(userId);
+
+        const accessToken = user.generateToken();
+
+        user.accessToken = accessToken;
+        await user.save({validateBeforeSave: false});
+
+        return accessToken;
+    }
+    catch(err){
+        throw new ApiError(500, "Something went wrong while generating access token")
+    }
+}
+
 const registerUser = asyncHandler(async(req,res) => {
     const {name,email,password,userType} = req.body;
 
@@ -54,12 +70,60 @@ const loginUser = asyncHandler(async(req,res) => {
     if(!isPasswordValid){
         throw new ApiError(400,"Entered Password is incorrect.");
     }
+    const accessToken = await generateAccessToken(user._id);
+
     const loggedInUser = await User.findById(user._id).select("-password")
-    
-    return res.status(200).json(new ApiResponse(200,{user:loggedInUser},"User login successfully."))
+    const options = {
+        httpOnly: true,
+        secure: true
+    }
+
+    return res
+    .status(200)
+    .cookie("accessToken",accessToken,options)
+    .json(new ApiResponse(200,{ user: loggedInUser },"User login successfully."))
 })
+
+const logoutUser = asyncHandler(async(req,res) => {
+    const accessToken = req.cookies?.accessToken;
+    res.clearCookie(accessToken);
+    const options = {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production', 
+        sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
+    }
+    return res
+    .status(200)
+    .clearCookie("accessToken", options)
+    .json(new ApiResponse(200, {}, "User logged Out"))
+})
+
+const forgotPassword = asyncHandler(async (req, res) => {
+    const { email, newpassword } = req.body;
+
+    // Check if email and new password are provided
+    if (![email, newpassword].every(field => field && field.trim())) {
+        throw new ApiError(400, "All fields are required");
+    }
+
+    // Find the user by email
+    const user = await User.findOne({ email });
+    if (!user) {
+        throw new ApiError(404, "User not found");
+    }
+
+    // Update the user's password
+    user.password = newpassword;
+    await user.save({ validateBeforeSave: false }); 
+
+    // Send success response
+    res.status(200).json({ message: "Password has been reset successfully" });
+});
+
 
 export {
     registerUser,
-    loginUser
+    loginUser,
+    logoutUser,
+    forgotPassword
 }

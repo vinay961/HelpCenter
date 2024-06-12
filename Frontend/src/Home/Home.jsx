@@ -1,9 +1,8 @@
-import React from "react";
+import React,{useState} from "react";
 import Nav from '../Components/Nav.jsx';
 import { FaGithub, FaTwitter, FaLinkedin } from 'react-icons/fa';
 import Testimonial from "../Components/Testimonial/Testimonial.jsx";
 import './Home.css';
-
 function Home() {
     return (
         <>

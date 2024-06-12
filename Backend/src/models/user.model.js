@@ -1,6 +1,7 @@
 import {Schema,mongoose} from 'mongoose'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import crypto from 'crypto'
 
 
 const userSchema = new Schema({
@@ -26,7 +27,12 @@ const userSchema = new Schema({
     userType:{
         type: String,
         required:[true,"user-type is requrired."]
-    }
+    },
+    accessToken:{
+        type: String,
+        required: false
+    },
+    resetPasswordToken: String,
 },{timestamps:true})
 
 // password becrypt method
@@ -56,5 +62,13 @@ userSchema.methods.generateToken = function(){
         }
     )
 }
+
+// forgot password token generator
+userSchema.methods.generatePasswordResetToken = function() {
+    const resetToken = crypto.randomBytes(20).toString('hex');
+    this.resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+    this.resetPasswordExpires = Date.now() + 3600000; // 1 hour from now
+    return resetToken;
+};
 
 export const User = mongoose.model("user",userSchema)
