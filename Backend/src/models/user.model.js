@@ -32,7 +32,7 @@ const userSchema = new Schema({
         type: String,
         required: false
     },
-    resetPasswordToken: String,
+    // resetPasswordToken: String,
 },{timestamps:true})
 
 // password becrypt method

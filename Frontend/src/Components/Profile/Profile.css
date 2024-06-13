@@ -1,0 +1,9 @@
+.profilebody {
+    /* height: 89vh; */
+    width: 100%;
+    background-image: url('https://images.pexels.com/photos/673648/pexels-photo-673648.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'), linear-gradient(rgba(89, 113, 147, 0.3), rgba(183, 206, 211, 0.3));
+    background-blend-mode: overlay;
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.7) contrast(1.9);
+  }

@@ -6,6 +6,9 @@ import Home from './Home/Home.jsx'
 import Login from './Components/Login/Login.jsx'
 import Register from './Components/Register/Register.jsx'
 import About from './About/About.jsx';
+import Contact from './Contact/Contact.jsx';
+import Profile from './Components/Profile/Profile.jsx';
+import PasswordChange from './Components/Password/Password.jsx';
 
 
 function App() {
@@ -18,6 +21,9 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path='/about' element={<About />} />
+          <Route path='/contact' element={<Contact />} />
+          <Route path='/profile' element={< Profile />} />
+          <Route path='/changepassword' element={< PasswordChange />} />
         </Routes>
       </Router>
     </>

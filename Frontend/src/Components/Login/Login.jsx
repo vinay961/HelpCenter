@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './Login.css'
 
 function Login() {
     const navigate = useNavigate();
@@ -7,11 +8,23 @@ function Login() {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [isForgotPassword, setIsForgotPassword] = useState(false);
+    let timeoutId;
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
+
+    const clearMessages = () => {
+        timeoutId = setTimeout(() => {
+            setError('');
+            setSuccess('');
+        }, 2000);
+    };
+
+    useEffect(() => {
+        return () => clearTimeout(timeoutId); // Cleanup on unmount
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -29,6 +42,7 @@ function Login() {
                 }
 
                 setSuccess('Password has been reset successfully.');
+                clearMessages();
                 setTimeout(() => {
                     setIsForgotPassword(false);
                     setSuccess('');
@@ -36,6 +50,7 @@ function Login() {
             } catch (err) {
                 console.error(err);
                 setError('Failed to reset password');
+                clearMessages();
             }
         } else {
             // Handle login logic
@@ -54,20 +69,22 @@ function Login() {
                 const responseData = await response.json();
                 localStorage.setItem('loggedInUser', JSON.stringify(responseData.data.user));
                 setSuccess('Login successful! Redirecting to Dashboard...');
+                clearMessages();
                 setTimeout(() => {
                     navigate('/');
                 }, 2000);
             } catch (err) {
                 console.error(err);
                 setError('Invalid email or password');
+                clearMessages();
             }
         }
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-800">
+        <div className="min-h-screen flex items-center justify-center loginbody">
             <div className="max-w-md w-full bg-gray-900 rounded-lg shadow-lg p-8">
-                {error && <div className="mb-4 text-red-500">{error}</div>}
+                {error && <div className="mb-4 text-red-500 text-center">{error}</div>}
                 {success && <div className="mb-4 text-green-500 text-center">{success}</div>}
 
                 {!isForgotPassword ? (
@@ -82,7 +99,7 @@ function Login() {
                                 autoComplete="email"
                                 value={formData.email}
                                 onChange={handleChange}
-                                className="mt-1 block w-full rounded-md border border-gray-700 py-2 px-3 text-black-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                className="mt-1 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                         </div>
 
@@ -95,21 +112,21 @@ function Login() {
                                 autoComplete="current-password"
                                 value={formData.password}
                                 onChange={handleChange}
-                                className="mt-1 block w-full rounded-md border border-gray-700 py-2 px-3 text-black-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                className="mt-1 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                         </div>
 
                         <div className="flex justify-between mb-4 gap-2">
                             <button
                                 type="button"
-                                className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-indigo-600 hover:to-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
                                 onClick={handleSubmit}
                             >
                                 Submit
                             </button>
                             <button
                                 type="button"
-                                className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-red-600 to-pink-500 hover:from-red-500 hover:to-pink-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                                className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                                 onClick={() => { navigate('/') }}
                             >
                                 Back
@@ -137,7 +154,7 @@ function Login() {
                                 autoComplete="email"
                                 value={formData.email}
                                 onChange={handleChange}
-                                className="mt-1 block w-full rounded-md border border-black-700 py-2 px-3 text-black-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                className="mt-1 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                         </div>
 
@@ -150,21 +167,21 @@ function Login() {
                                 autoComplete="new-password"
                                 value={formData.newPassword}
                                 onChange={handleChange}
-                                className="mt-1 block w-full rounded-md border border-gray-700 py-2 px-3 text-black-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                className="mt-1 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                         </div>
 
                         <div className="flex justify-between mb-4 gap-2">
                             <button
                                 type="button"
-                                className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-indigo-600 hover:to-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
                                 onClick={handleSubmit}
                             >
                                 Reset Password
                             </button>
                             <button
                                 type="button"
-                                className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-red-600 to-pink-500 hover:from-red-500 hover:to-pink-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                                className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                                 onClick={() => setIsForgotPassword(false)}
                             >
                                 Back to Login
@@ -178,4 +195,3 @@ function Login() {
 }
 
 export default Login;
-

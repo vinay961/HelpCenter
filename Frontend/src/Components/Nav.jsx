@@ -1,19 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Nav.css';
 import logo from '../Images/logo.png';
-// import avatarPlaceholder from '../Images/avatar-placeholder.png'; // Placeholder avatar image
 
 const Nav = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(false);
-  const [showDropdown, setShowDropdown] = useState(false); // State to toggle dropdown menu
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [avatarClicked, setAvatarClicked] = useState(false);
+  const dropdownRef = useRef(null);
 
   useEffect(() => {
     const loggedInUser = localStorage.getItem('loggedInUser');
     if (loggedInUser) {
       setUser(true);
     }
+
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false);
+        setAvatarClicked(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
 
   const handleLogout = async () => {
@@ -22,12 +35,13 @@ const Nav = () => {
         method: 'POST',
         credentials: 'include',
       });
-      setShowDropdown(false)
+      setShowDropdown(false);
+      setAvatarClicked(false);
 
       if (response.status === 200) {
         localStorage.removeItem('loggedInUser');
         setUser(false);
-        navigate('/'); // Redirect to home or login page after logout
+        navigate('/');
       } else {
         console.error('Failed to logout');
       }
@@ -38,6 +52,7 @@ const Nav = () => {
 
   const handleDropdownToggle = () => {
     setShowDropdown((prevState) => !prevState);
+    setAvatarClicked((prevState) => !prevState);
   };
 
   return (
@@ -47,7 +62,7 @@ const Nav = () => {
         <div className="flex items-center">
           <img src={logo} alt="Logo" className="h-12 w-auto mr-3" />
         </div>
-        
+
         {/* Navigation Links */}
         <div className="text-xl hidden md:flex space-x-6">
           <a href="/" className="nav-link">Home</a>
@@ -56,30 +71,30 @@ const Nav = () => {
         </div>
 
         {/* Avatar and Dropdown */}
-        <div className="relative">
+        <div className="relative" ref={dropdownRef}>
           {user && (
-            <button 
+            <button
               onClick={handleDropdownToggle}
-              className="h-12 w-12 rounded-full overflow-hidden focus:outline-none"
+              className={`h-12 w-12 rounded-full overflow-hidden focus:outline-none transition-colors duration-300 ${avatarClicked ? 'border-4 border-green-800' : 'border-4 border-gray-200'}`}
             >
-              <img src="https://cdn2.f-cdn.com/contestentries/1440473/30778261/5bdd02db9ff4c_thumb900.jpg" alt="Avatar" className="h-full w-full object-cover" />
+              <img src="https://th.bing.com/th/id/OIP.oU8cbOKSalCc7pchD_b4tAAAAA?w=474&h=474&rs=1&pid=ImgDetMain" alt="Avatar" className="h-full w-full object-cover" />
             </button>
           )}
           {showDropdown && (
             <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg ring-1 ring-gray-300 ring-opacity-50 z-10">
-              <button 
-                onClick={() => { /* Handle Profile Option */ }}
+              <button
+                onClick={() => { navigate('/profile') }}
                 className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
               >
                 Profile
               </button>
-              <button 
-                onClick={() => { /* Handle Change Password Option */ }}
+              <button
+                onClick={() => {navigate('/changepassword')}}
                 className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
               >
                 Change Password
               </button>
-              <button 
+              <button
                 onClick={handleLogout}
                 className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
               >
@@ -92,17 +107,17 @@ const Nav = () => {
         {/* Login/Register Buttons */}
         {!user && (
           <div className="flex space-x-4">
-            <a 
-              href="/login" 
-              className="text-gray-700 bg-gray-300 hover:text-white hover:bg-gray-700 px-3 py-2 rounded transition duration-300" 
-              onClick={() => {navigate('/login')}} 
+            <a
+              href="/login"
+              className="text-gray-700 bg-gray-300 hover:text-white hover:bg-gray-700 px-3 py-2 rounded transition duration-300"
+              onClick={() => { navigate('/login') }}
             >
               Login
             </a>
-            <a 
-              href="/register" 
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300" 
-              onClick={() => {navigate('/register')}} 
+            <a
+              href="/register"
+              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300"
+              onClick={() => { navigate('/register') }}
             >
               Register
             </a>

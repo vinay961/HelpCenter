@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './Register.css'
 
 function Register() {
     const navigate = useNavigate();
@@ -44,7 +45,7 @@ function Register() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-gray-700 to-gray-900">
+        <div className="min-h-screen flex items-center justify-center registerbody">
             <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8">
                 <div className="border-b border-gray-300 pb-4 mb-4">
                     <h2 className="text-3xl font-semibold leading-7 text-gray-900">Register</h2>
