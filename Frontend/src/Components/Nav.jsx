@@ -11,10 +11,27 @@ const Nav = () => {
   const dropdownRef = useRef(null);
 
   useEffect(() => {
-    const loggedInUser = localStorage.getItem('loggedInUser');
-    if (loggedInUser) {
-      setUser(true);
-    }
+    const checkAuth = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/api/users/checkauth', {
+          method: 'GET',
+          credentials: 'include',
+        });
+        
+        if (response.status === 200) {
+          setUser(true);
+        } else {
+          localStorage.removeItem('loggedInUser');
+          setUser(false);
+        }
+      } catch (error) {
+        console.error('Error checking authentication:', error);
+        localStorage.removeItem('loggedInUser');
+        setUser(false);
+      }
+    };
+
+    checkAuth();
 
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -64,7 +81,7 @@ const Nav = () => {
         </div>
 
         {/* Navigation Links */}
-        <div className="text-xl hidden md:flex space-x-6">
+        <div className="text-xl hidden md:flex space-x-7">
           <a href="/" className="nav-link">Home</a>
           <a href="/about" className="nav-link">About</a>
           <a href="/contact" className="nav-link">Contact Me</a>
@@ -89,7 +106,7 @@ const Nav = () => {
                 Profile
               </button>
               <button
-                onClick={() => {navigate('/changepassword')}}
+                onClick={() => { navigate('/changepassword') }}
                 className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
               >
                 Change Password

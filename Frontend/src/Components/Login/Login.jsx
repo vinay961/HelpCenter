@@ -83,15 +83,15 @@ function Login() {
 
     return (
         <div className="min-h-screen flex items-center justify-center loginbody">
-            <div className="max-w-md w-full bg-gray-900 rounded-lg shadow-lg p-8">
+            <div className="max-w-md w-full bg-gray-300 rounded-lg shadow-lg p-8">
                 {error && <div className="mb-4 text-red-500 text-center">{error}</div>}
                 {success && <div className="mb-4 text-green-500 text-center">{success}</div>}
 
                 {!isForgotPassword ? (
                     <>
-                        <h2 className="text-2xl font-semibold text-center text-gray-300 mb-6">Login</h2>
+                        <h2 className="text-2xl font-semibold text-center text-gray-900 mb-6">Login</h2>
                         <div className="mb-6">
-                            <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-300">Email address</label>
+                            <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">Email address</label>
                             <input
                                 id="email"
                                 name="email"
@@ -104,7 +104,7 @@ function Login() {
                         </div>
 
                         <div className="mb-6">
-                            <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-300">Password</label>
+                            <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">Password</label>
                             <input
                                 id="password"
                                 name="password"
@@ -135,7 +135,7 @@ function Login() {
 
                         <div className="text-center">
                             <button
-                                className="text-sm font-medium text-indigo-400 hover:text-indigo-300"
+                                className="text-sm font-medium text-indigo-400 hover:text-indigo-700"
                                 onClick={() => setIsForgotPassword(true)}
                             >
                                 Forgot Password?
@@ -144,9 +144,9 @@ function Login() {
                     </>
                 ) : (
                     <>
-                        <h2 className="text-2xl font-semibold text-center text-gray-300 mb-6">Forgot Password</h2>
+                        <h2 className="text-2xl font-semibold text-center text-gray-900 mb-6">Forgot Password</h2>
                         <div className="mb-6">
-                            <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-300">Email address</label>
+                            <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">Email address</label>
                             <input
                                 id="email"
                                 name="email"
@@ -159,7 +159,7 @@ function Login() {
                         </div>
 
                         <div className="mb-6">
-                            <label htmlFor="newPassword" className="block text-sm font-medium leading-6 text-gray-300">New Password</label>
+                            <label htmlFor="newPassword" className="block text-sm font-medium leading-6 text-gray-900">New Password</label>
                             <input
                                 id="newPassword"
                                 name="newPassword"

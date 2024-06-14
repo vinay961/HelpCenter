@@ -154,11 +154,84 @@ const changePassword = asyncHandler(async(req,res) => {
     .json(new ApiResponse(200,user,"Password changed successfully"))
 })
 
+const updateProfile = asyncHandler(async(req,res) => {
+    try {
+        const {name,email} = req.body;
+
+        if(
+            [name,email].some((field) => {field?.trim === ''})
+        ){
+            throw new ApiError(400,"All fields are required.")
+        }
+
+        const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ","")
+        if(!token){
+            throw new ApiError(401 , "Unauthorized request")
+        }
+        const decodedToken = jwt.verify(token,process.env.ACCESS_TOKEN_SECRET)  // basically return payload that we mentioned while creating token.
+        const user = await User.findById(decodedToken?._id).select("-password");
+        if(!user){
+            throw new ApiError(401, "Invalid Access Token")
+        }
+        user.name = name;
+        user.email = email;
+        await user.save({validateBeforeSave:false})
+
+        res
+        .status(200)
+        .json(new ApiResponse(200,{user},"user updated successfully"))
+    } catch (error) {
+        throw new ApiError(404,"something went wrong while updating profile.")
+    }
+})
+
+const deleteProfile = asyncHandler(async(req,res) => {
+    const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ","")
+    if(!token){
+        throw new ApiError(401 , "Unauthorized request")
+    }
+    const decodedToken = jwt.verify(token,process.env.ACCESS_TOKEN_SECRET)  // basically return payload that we mentioned while creating token.
+    res.clearCookie(token);
+    await User.findByIdAndDelete(decodedToken?._id);
+
+    const options = {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production', 
+        sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
+    }
+
+    res
+    .status(201)
+    .clearCookie("accessToken", options)
+    .json(new ApiResponse(201,"User deleted successfully."))
+})
+
+const checkAuth = asyncHandler(async(req,res) => {
+    const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ","")
+    if(!token){
+        throw new ApiError(401 , "Unauthorized request")
+    }
+    const decodedToken = jwt.verify(token,process.env.ACCESS_TOKEN_SECRET)  // basically return payload that we mentioned while creating token.
+    res.clearCookie(token);
+    const user = await User.findById(decodedToken?._id);
+
+    if(!user){
+        throw new ApiError(400,"User not found!! May be token expired.")
+    }
+
+    res
+    .status(200)
+    .json(new ApiResponse(200,{},"Everything is ok."))
+})
+
 
 export {
     registerUser,
     loginUser,
     logoutUser,
     forgotPassword,
-    changePassword
+    changePassword,
+    updateProfile,
+    deleteProfile,
+    checkAuth
 }
