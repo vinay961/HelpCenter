@@ -9,6 +9,7 @@ import About from './About/About.jsx';
 import Contact from './Contact/Contact.jsx';
 import Profile from './Components/Profile/Profile.jsx';
 import PasswordChange from './Components/Password/Password.jsx';
+import Rooms from './Components/Rooms/Rooms.jsx';
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
           <Route path='/contact' element={<Contact />} />
           <Route path='/profile' element={< Profile />} />
           <Route path='/changepassword' element={< PasswordChange />} />
+          <Route path='/rooms' element={<Rooms />} />
         </Routes>
       </Router>
     </>

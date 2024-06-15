@@ -89,7 +89,7 @@ function Login() {
 
                 {!isForgotPassword ? (
                     <>
-                        <h2 className="text-2xl font-semibold text-center text-gray-900 mb-6">Login</h2>
+                        <h2 class="mt-2 mb-4 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your account</h2>
                         <div className="mb-6">
                             <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">Email address</label>
                             <input

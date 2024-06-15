@@ -73,7 +73,7 @@ const Nav = () => {
   };
 
   return (
-    <nav className="p-4 shadow-lg bg-gradient-to-r from-gray-100 to-gray-500">
+    <nav className="p-4 shadow-lg bg-gradient-to-r from-gray-100 to-gray-500 z-50">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
         <div className="flex items-center">
@@ -81,24 +81,24 @@ const Nav = () => {
         </div>
 
         {/* Navigation Links */}
-        <div className="text-xl hidden md:flex space-x-7">
+        <div className="text-xl hidden md:flex space-x-7 ml-8 z-20">
           <a href="/" className="nav-link">Home</a>
           <a href="/about" className="nav-link">About</a>
           <a href="/contact" className="nav-link">Contact Me</a>
         </div>
 
         {/* Avatar and Dropdown */}
-        <div className="relative" ref={dropdownRef}>
+        <div className="relative z-20 ml-16" ref={dropdownRef}>
           {user && (
             <button
               onClick={handleDropdownToggle}
-              className={`h-12 w-12 rounded-full overflow-hidden focus:outline-none transition-colors duration-300 ${avatarClicked ? 'border-4 border-green-800' : 'border-4 border-gray-200'}`}
+              className={`h-12 w-12 z-50 rounded-full overflow-hidden focus:outline-none transition-colors duration-300 ${avatarClicked ? 'border-4 border-green-800' : 'border-4 border-gray-200'}`}
             >
-              <img src="https://th.bing.com/th/id/OIP.oU8cbOKSalCc7pchD_b4tAAAAA?w=474&h=474&rs=1&pid=ImgDetMain" alt="Avatar" className="h-full w-full object-cover" />
+              <img src="https://th.bing.com/th/id/OIP.oU8cbOKSalCc7pchD_b4tAAAAA?w=474&h=474&rs=1&pid=ImgDetMain" alt="Avatar" className="h-full w-full object-cover z-30" />
             </button>
           )}
           {showDropdown && (
-            <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg ring-1 ring-gray-300 ring-opacity-50 z-10">
+            <div className="absolute z-20 right-0 mt-2 w-48 bg-white rounded-lg shadow-lg ring-1 ring-gray-300 ring-opacity-50 ">
               <button
                 onClick={() => { navigate('/profile') }}
                 className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
