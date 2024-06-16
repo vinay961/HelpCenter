@@ -1,0 +1,121 @@
+/* roomsPage.css */
+
+.roompagebody {
+    position: relative;
+    position: fixed;
+    height: 100vh;
+    width: 100%;
+    background-color: #6E6E6E; 
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .header-fixed {
+    background-color: #1a1a1a;
+    z-index: 10;
+    padding: 1rem 0;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+  
+  .roomlist-container {
+    flex: 1;
+    margin-top: 4rem; 
+    padding: 1rem;
+    overflow: hidden;
+    overflow-y: auto;
+  }
+  
+  .room-card {
+    background-color: #2d2d2d;
+    border-radius: 0.5rem;
+    /* overflow: hidden; */
+    transition: background-color 0.3s;
+  }
+  
+  .room-card:hover {
+    background-color: #3d3d3d;
+  }
+  
+  .room-image {
+    width: 100%;
+    height: 12rem;
+    object-fit: cover;
+  }
+  
+  .room-details {
+    padding: 1rem;
+  }
+  
+  .room-details .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .room-details .header .badge {
+    background-color: #4a4a4a;
+    color: #b0b0b0;
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+  }
+  
+  .room-details h2 {
+    color: white;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .room-details p {
+    color: #b0b0b0;
+  }
+  
+  .room-details .user-info {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+  }
+  
+  .room-details .user-info img {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 9999px;
+    margin-right: 1rem;
+  }
+  
+  .room-details .user-info .user-name {
+    font-weight: bold;
+    color: white;
+  }
+  
+  .room-details .user-info .user-role {
+    color: #b0b0b0;
+  }
+  
+  .room-details .location,
+  .room-details .price {
+    margin-top: 1rem;
+    color: #b0b0b0;
+  }
+  
+  .room-details .price {
+    font-weight: bold;
+    color: white;
+  }
+  
+  .room-details .button {
+    background-color: #007bff;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    margin-top: 1rem;
+    transition: background-color 0.3s;
+  }
+  
+  .room-details .button:hover {
+    background-color: #0056b3;
+  }
+  

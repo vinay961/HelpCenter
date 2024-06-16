@@ -1,3 +1,4 @@
+// src/Components/Nav.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Nav.css';
@@ -6,6 +7,7 @@ import logo from '../Images/logo.png';
 const Nav = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(false);
+  const [userType, setUserType] = useState(null); // Add this state
   const [showDropdown, setShowDropdown] = useState(false);
   const [avatarClicked, setAvatarClicked] = useState(false);
   const dropdownRef = useRef(null);
@@ -19,15 +21,21 @@ const Nav = () => {
         });
         
         if (response.status === 200) {
-          setUser(true);
+          const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+          if (loggedInUser) {
+            setUser(true);
+            setUserType(loggedInUser.userType); // Set userType here
+          }
         } else {
           localStorage.removeItem('loggedInUser');
           setUser(false);
+          setUserType(null); // Reset userType
         }
       } catch (error) {
         console.error('Error checking authentication:', error);
         localStorage.removeItem('loggedInUser');
         setUser(false);
+        setUserType(null); // Reset userType
       }
     };
 
@@ -58,6 +66,7 @@ const Nav = () => {
       if (response.status === 200) {
         localStorage.removeItem('loggedInUser');
         setUser(false);
+        setUserType(null); // Reset userType
         navigate('/');
       } else {
         console.error('Failed to logout');
@@ -98,13 +107,21 @@ const Nav = () => {
             </button>
           )}
           {showDropdown && (
-            <div className="absolute z-20 right-0 mt-2 w-48 bg-white rounded-lg shadow-lg ring-1 ring-gray-300 ring-opacity-50 ">
+            <div className="absolute z-20 right-0 mt-2 w-48 bg-white rounded-lg shadow-lg ring-1 ring-gray-300 ring-opacity-50">
               <button
                 onClick={() => { navigate('/profile') }}
                 className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
               >
                 Profile
               </button>
+              {user && userType === 'seller' && (
+                <button
+                  onClick={() => { navigate('/rooms') }}
+                  className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                >
+                  Add Room Details
+                </button>
+              )}
               <button
                 onClick={() => { navigate('/changepassword') }}
                 className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"

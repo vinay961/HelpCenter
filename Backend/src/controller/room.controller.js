@@ -48,6 +48,13 @@ const roomRegister = asyncHandler(async (req, res) => {
     .json(new ApiResponse(201, {room}, "Room registered successfully"));
 });
 
+const getRooms = asyncHandler(async(req,res) => {
+    
+    const rooms = await Room.find();
+    res.status(201).json(new ApiResponse(201,rooms,"Rooms fetched successfully."))
+})
+
 export { 
-    roomRegister
+    roomRegister,
+    getRooms
 };

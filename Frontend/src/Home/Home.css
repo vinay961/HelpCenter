@@ -1,5 +1,5 @@
 .body {
-    height: 89vh;
+    height: 100vh;
     width: 100%;
     background-image: url('https://img.freepik.com/premium-photo/banner-background-cityscape-white-textured-backgrounds_879987-5420.jpg?w=1060'), linear-gradient(rgba(89, 113, 147, 0.3), rgba(183, 206, 211, 0.3));
     background-blend-mode: overlay;
@@ -7,3 +7,5 @@
     background-position: center;
     filter: brightness(0.7) contrast(1.9);
   }
+
+  

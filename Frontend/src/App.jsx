@@ -10,6 +10,7 @@ import Contact from './Contact/Contact.jsx';
 import Profile from './Components/Profile/Profile.jsx';
 import PasswordChange from './Components/Password/Password.jsx';
 import Rooms from './Components/Rooms/Rooms.jsx';
+import RoomList from './Components/roomsPage/roomsPage.jsx';
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
           <Route path='/profile' element={< Profile />} />
           <Route path='/changepassword' element={< PasswordChange />} />
           <Route path='/rooms' element={<Rooms />} />
+          <Route path='/homelist' element={<RoomList />} />
         </Routes>
       </Router>
     </>
