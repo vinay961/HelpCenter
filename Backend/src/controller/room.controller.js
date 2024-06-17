@@ -54,7 +54,28 @@ const getRooms = asyncHandler(async(req,res) => {
     res.status(201).json(new ApiResponse(201,rooms,"Rooms fetched successfully."))
 })
 
+const getUserRoom = asyncHandler(async(req,res) => {
+    try{
+        const token = req.cookies?.accessToken;
+        if(!token){
+            throw new ApiError(401,"Unauthorized request.")
+        }
+        // const rooms = await Room.find();
+        const decoded_token = jwt.verify(token,process.env.ACCESS_TOKEN_SECRET)
+        console.log(decoded_token);
+        const room = await Room.find({'user.id' : decoded_token._id});
+        if(!room){
+            throw new ApiError(404,"Not room found for you.")
+        }
+        res.status(200).json(new ApiResponse(200,{room} ,"Rooms Searching sucessfully done."))
+    }
+    catch(err){
+        throw new ApiError(400,"error found while fetching current user room list.")
+    }
+})
+
 export { 
     roomRegister,
-    getRooms
+    getRooms,
+    getUserRoom
 };

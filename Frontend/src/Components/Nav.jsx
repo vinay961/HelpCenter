@@ -115,12 +115,22 @@ const Nav = () => {
                 Profile
               </button>
               {user && userType === 'seller' && (
-                <button
-                  onClick={() => { navigate('/rooms') }}
-                  className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
-                >
-                  Add Room Details
-                </button>
+                <>
+        
+                  <button
+                    onClick={() => { navigate('/rooms') }}
+                    className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                  >
+                    Add Room Details
+                  </button>
+                  <button
+                    onClick={() => { navigate('/userRooms') }}
+                    className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                  >
+                    View Added Rooms
+                  </button>
+
+                </>
               )}
               <button
                 onClick={() => { navigate('/changepassword') }}
