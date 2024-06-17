@@ -33,7 +33,19 @@ const roomSchema = new Schema({
     },
     message:{
         type: String,
-        required: [true, "room details are required."]
+        required:false
+    },
+    price:{
+        type: String,
+        required: [true, "Price is required as user want to see it."]
+    },
+    gender:{
+        type: String,
+        required:true
+    },
+    roomType:{
+        type: String,
+        reqquired:false
     },
     user: {
         id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },

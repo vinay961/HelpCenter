@@ -17,6 +17,9 @@ export default function Contact() {
     roomImage: null,
     phoneNumber: '',
     message: '',
+    price: '',
+    gender: '',
+    roomType: '',
   })
   const [message, setMessage] = useState(null)
 
@@ -32,14 +35,12 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     const data = new FormData()
-    data.append('area', formData.area)
-    data.append('district', formData.district)
-    data.append('state', formData.state)
-    data.append('roomImage', formData.roomImage)
-    data.append('phoneNumber', formData.phoneNumber)
-    data.append('message', formData.message)
+    Object.keys(formData).forEach(key => {
+      data.append(key, formData[key])
+    })
 
     try {
+      console.log(data);
       const response = await fetch('http://localhost:8000/api/rooms/roomregister', {
         method: 'POST',
         body: data,
@@ -56,6 +57,9 @@ export default function Contact() {
           roomImage: null,
           phoneNumber: '',
           message: '',
+          price: '',
+          gender: '',
+          roomType: '',
         })
         setAgreed(false)
       } else {
@@ -197,20 +201,77 @@ export default function Contact() {
                   />
                 </div>
               </div>
-              <div className="sm:col-span-2">
-                <label htmlFor="message" className="block text-sm font-semibold leading-6 text-white">
-                  About Room
+              <div>
+                <label htmlFor="price" className="block text-sm font-semibold leading-6 text-white">
+                  Price
                 </label>
                 <div className="mt-2.5">
-                  <textarea
-                    name="message"
-                    id="message"
-                    rows={4}
-                    placeholder="Like facilities provided with rooms, Size of rooms, etc"
-                    value={formData.message}
+                  <input
+                    type="number"
+                    name="price"
+                    id="price"
+                    placeholder="400"
+                    value={formData.price}
                     onChange={handleChange}
                     className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
+                </div>
+              </div>
+              <div>
+                <label htmlFor="gender" className="block text-sm font-semibold leading-6 text-white">
+                  Room for
+                </label>
+                <div className="mt-2.5">
+                  <select
+                    name="gender"
+                    id="gender"
+                    value={formData.gender}
+                    onChange={handleChange}
+                    className="block w-full rounded-md border-0 px-3.5 py-2 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  >
+                    <option value="" className='font-bold'>Select</option>
+                    <option value="boys" className='font-bold'>Boys</option>
+                    <option value="girls" className='font-bold'>Girls</option>
+                  </select>
+                </div>
+              </div>
+              <div className="sm:col-span-2">
+                <label htmlFor="roomType" className="block text-sm font-semibold leading-6 text-white">
+                  About Room
+                </label>
+                <div className="mt-2.5">
+                  <select
+                    name="roomType"
+                    id="roomType"
+                    value={formData.roomType}
+                    onChange={handleChange}
+                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-600 focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white text-gray-900"
+                  >
+                    <option value="Fully Furnished: Includes bed, table, chair, fan, light; suitable for students." className="py-1 font-bold">
+                      Fully Furnished: Includes bed, table, chair, fan, light; suitable for students.
+                    </option>
+                    <option value="Semi-Furnished: Includes 1BHK with personal bathroom, bed, table, chair, light, fan, small hall/balcony." className="py-1 font-bold">
+                      Semi-Furnished: Includes 1BHK with personal bathroom, bed, table, chair, light, fan, small hall/balcony.
+                    </option>
+                    <option value="Unfurnished: Includes 2BHK with two rooms, personal bathroom, bed, table, chair, light, fan, medium-sized hall/balcony." className="py-1 font-bold">
+                      Unfurnished: Includes 2BHK with two rooms, personal bathroom, bed, table, chair, light, fan, medium-sized hall/balcony.
+                    </option>
+                    <option value="other" className="py-1 font-bold">
+                      Other
+                    </option>
+                  </select>
+                  {/* Conditional input field based on selection */}
+                  {formData.roomType === 'other' && (
+                    <input
+                      type="text"
+                      id="message"
+                      name="message"
+                      value={formData.customRoomType}
+                      onChange={handleChange}
+                      className="block w-full mt-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-600 focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white text-gray-900"
+                      placeholder="Enter custom room description"
+                    />
+                  )}
                 </div>
               </div>
               <Field as="div" className="flex gap-x-4 sm:col-span-2">

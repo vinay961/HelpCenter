@@ -9,12 +9,11 @@ import { uploadOnCloudinary } from '../utils/cloudinary.js';
 import path from 'path'
 
 const roomRegister = asyncHandler(async (req, res) => {
-    const { area, district, state, phoneNumber, message } = req.body;
+    const { area, district, state, phoneNumber, message, price, gender, roomType } = req.body;
 
-    if ([area, district, state, phoneNumber, message].some(field => field?.trim() === '')) {
+    if ([area, district, state, phoneNumber,price,gender].some(field => field?.trim() === '')) {
         throw new ApiError(401, "All fields are required.");
     }
-    // console.log(req.file);
     const localFilePath = req.file?.path;
 
     const token = req.cookies?.accessToken;
@@ -26,9 +25,7 @@ const roomRegister = asyncHandler(async (req, res) => {
     if (!user) {
         throw new ApiError(401, "Invalid Access Token");
     }
-    // console.log(localFilePath)
     const roomImage = await uploadOnCloudinary(localFilePath)
-    // console.log(roomImage);
 
     const room = await Room.create({
         area,
@@ -37,6 +34,9 @@ const roomRegister = asyncHandler(async (req, res) => {
         roomImage:roomImage?.url || "",
         phoneNumber,
         message,
+        gender,
+        roomType,
+        price,
         user: {
             id: user._id,
             name: user.name
