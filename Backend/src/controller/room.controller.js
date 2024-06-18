@@ -62,7 +62,7 @@ const getUserRoom = asyncHandler(async(req,res) => {
         }
         // const rooms = await Room.find();
         const decoded_token = jwt.verify(token,process.env.ACCESS_TOKEN_SECRET)
-        console.log(decoded_token);
+        // console.log(decoded_token);
         const room = await Room.find({'user.id' : decoded_token._id});
         if(!room){
             throw new ApiError(404,"Not room found for you.")
@@ -74,8 +74,72 @@ const getUserRoom = asyncHandler(async(req,res) => {
     }
 })
 
+const editRoom = asyncHandler(async(req,res) => {
+    const roomId = req.params.id;
+    console.log(roomId)
+    if(!roomId){
+        throw new ApiError(400,"Not getting room Id.")
+    }
+    const {roomImage,area,district,gender,price,roomType,message} = req.body;
+
+    try{
+        let room = await Room.findById(roomId)
+        if(req.file){
+            const localFilePath = req.file?.path;
+            const roomImage = await uploadOnCloudinary(localFilePath);
+            room.roomImage = roomImage?.url;
+        }
+        if(area){
+            room.area = area;
+        }
+        if(district){
+            room.district = district;
+        }
+        if(gender){
+            room.gender = gender;
+        }
+        if(price){
+            room.price = price;
+        }
+        if(roomType){
+            room.roomType = roomType;
+        }
+        if(message){
+            room.message = message;
+        }
+
+        room = await room.save({validateBeforeSave:false});
+
+        res
+        .status(200)
+        .json(new ApiResponse(200,room,"Room updated successfully."));
+    }
+    catch(err){
+        console.log(err)
+        throw new ApiError(400,"Error occured while updating user room details.")
+    }
+})
+
+const deleteRecord = asyncHandler(async(req,res) => {
+    const roomId = req.params.id;
+    if(!roomId){
+        throw new ApiError(400,"roomId not found.")
+    }
+    try {
+        
+        await Room.findByIdAndDelete(roomId);
+        res.status(200).json(new ApiResponse(200,{},"User Room Record successfully deleted."))
+
+    } catch (error) {
+        console.log(error);
+        throw new ApiError(404,"Error occur while deleting user room record.")
+    }
+})
+
 export { 
     roomRegister,
     getRooms,
-    getUserRoom
+    getUserRoom,
+    editRoom,
+    deleteRecord
 };

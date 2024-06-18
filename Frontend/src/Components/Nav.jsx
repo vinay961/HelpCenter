@@ -153,7 +153,7 @@ const Nav = () => {
           <div className="flex space-x-4">
             <a
               href="/login"
-              className="text-gray-700 bg-gray-300 hover:text-white hover:bg-gray-700 px-3 py-2 rounded transition duration-300"
+              className="text-gray-700 bg-gray-300 hover:text-white hover:bg-red-700 px-3 py-2 rounded transition duration-300"
               onClick={() => { navigate('/login') }}
             >
               Login

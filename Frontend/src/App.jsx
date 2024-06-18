@@ -12,6 +12,7 @@ import PasswordChange from './Components/Password/Password.jsx';
 import Rooms from './Components/Rooms/Rooms.jsx';
 import RoomList from './Components/roomsPage/roomsPage.jsx';
 import UserRooms from './Components/UserRoom/UserRoom.jsx';
+import EditRoom from './Components/EditRoom/EditRoom.jsx';
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
           <Route path='/rooms' element={<Rooms />} />
           <Route path='/homelist' element={<RoomList />} />
           <Route path='/userRooms' element={<UserRooms />} />
+          <Route path='/editroom' element={<EditRoom />} />
         </Routes>
       </Router>
     </>
