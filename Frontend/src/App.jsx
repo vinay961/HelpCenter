@@ -13,6 +13,7 @@ import Rooms from './Components/Rooms/Rooms.jsx';
 import RoomList from './Components/roomsPage/roomsPage.jsx';
 import UserRooms from './Components/UserRoom/UserRoom.jsx';
 import EditRoom from './Components/EditRoom/EditRoom.jsx';
+import FilteredRooms from './Components/Filter/Filter.jsx';
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
           <Route path='/homelist' element={<RoomList />} />
           <Route path='/userRooms' element={<UserRooms />} />
           <Route path='/editroom' element={<EditRoom />} />
+          <Route path='/filter/:location' element={< FilteredRooms />} />
         </Routes>
       </Router>
     </>

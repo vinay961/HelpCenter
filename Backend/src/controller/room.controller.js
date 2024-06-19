@@ -136,10 +136,46 @@ const deleteRecord = asyncHandler(async(req,res) => {
     }
 })
 
+const filterRoom = asyncHandler(async(req,res) => {
+    const {location} = req.query;
+    if(!location){
+        throw new ApiError(400,"Location is found.")
+    }
+
+    // const locationPart = Array.isArray(location) ? location : [location];
+    try {
+        const query = {
+            $or: [
+              { 'area': location },
+              { 'district': location },
+              { 'state': location },
+            ],
+        };
+        console.log(query);
+        const rooms = await Room.find(query);
+        console.log(rooms);
+
+        const uniqueRooms = rooms.reduce((acc, room) => {
+        if (!acc.find(r => r._id.equals(room._id))) {
+            acc.push(room);
+        }
+        return acc;
+        }, []);
+        
+        res
+        .status(200)
+        .json(new ApiResponse(200,{uniqueRooms},"Filter room fetching successful."))
+    } catch (error) {
+        console.log(error);
+        res.status(400).json(400,"Error encoutered while finding room based on location.")
+    }
+})
+
 export { 
     roomRegister,
     getRooms,
     getUserRoom,
     editRoom,
-    deleteRecord
+    deleteRecord,
+    filterRoom
 };

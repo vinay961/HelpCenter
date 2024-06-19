@@ -1,13 +1,21 @@
 // src/Pages/Home.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Nav from '../Components/Nav.jsx';
 import { FaGithub, FaTwitter, FaLinkedin } from 'react-icons/fa';
 import Testimonial from "../Components/Testimonial/Testimonial.jsx";
+import About from "../About/About.jsx"
 import './Home.css';
 
 function Home() {
+  const [location, setLocation] = useState('');
   const navigate = useNavigate();
+
+  const handleSearch = () => {
+    if (location.trim() !== '') {
+      navigate(`/filter/${location}`);
+    }
+  };
 
   return (
     <>
@@ -19,9 +27,12 @@ function Home() {
             <input
               type="text"
               placeholder="Enter location"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
               className="px-4 py-2 w-64 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
             <button
+              onClick={handleSearch}
               type="button"
               className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
@@ -31,7 +42,7 @@ function Home() {
               onClick={() => { navigate('/homelist') }}
               className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
-              Home List
+              Rooms List
             </button>
           </div>
           <Testimonial />
@@ -51,6 +62,7 @@ function Home() {
           </footer>
         </div>
       </div>
+      {/* <About /> */}
     </>
   );
 }
