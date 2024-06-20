@@ -7,7 +7,7 @@ import logo from '../Images/logo.png';
 const Nav = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(false);
-  const [userType, setUserType] = useState(null); // Add this state
+  const [userType, setUserType] = useState(null); 
   const [showDropdown, setShowDropdown] = useState(false);
   const [avatarClicked, setAvatarClicked] = useState(false);
   const dropdownRef = useRef(null);
@@ -24,18 +24,18 @@ const Nav = () => {
           const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
           if (loggedInUser) {
             setUser(true);
-            setUserType(loggedInUser.userType); // Set userType here
+            setUserType(loggedInUser.userType);
           }
         } else {
           localStorage.removeItem('loggedInUser');
           setUser(false);
-          setUserType(null); // Reset userType
+          setUserType(null); 
         }
       } catch (error) {
         console.error('Error checking authentication:', error);
         localStorage.removeItem('loggedInUser');
         setUser(false);
-        setUserType(null); // Reset userType
+        setUserType(null); 
       }
     };
 

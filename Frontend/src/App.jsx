@@ -14,6 +14,7 @@ import RoomList from './Components/roomsPage/roomsPage.jsx';
 import UserRooms from './Components/UserRoom/UserRoom.jsx';
 import EditRoom from './Components/EditRoom/EditRoom.jsx';
 import FilteredRooms from './Components/Filter/Filter.jsx';
+import Main from './Components/Book/Main.jsx'
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
           <Route path='/userRooms' element={<UserRooms />} />
           <Route path='/editroom' element={<EditRoom />} />
           <Route path='/filter/:location' element={< FilteredRooms />} />
+          <Route path='/book' element={< Main/>} />
         </Routes>
       </Router>
     </>

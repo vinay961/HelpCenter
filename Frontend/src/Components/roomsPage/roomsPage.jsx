@@ -1,9 +1,22 @@
 import React, { useEffect, useState } from 'react';
+import {useNavigate} from 'react-router-dom'
 import axios from 'axios';
 import './roomsPage.css';
 
 const RoomList = () => {
   const [rooms, setRooms] = useState([]);
+  const navigate = useNavigate()
+
+  const handlebook = () => {
+    const user = localStorage.getItem('loggedInUser')
+
+    if(user){
+      navigate('/book')
+    }
+    else{
+      navigate('/login')
+    }
+  }
 
   useEffect(() => {
     const fetchRooms = async () => {
@@ -46,7 +59,7 @@ const RoomList = () => {
               </div>
               <p className="location"><span className='font-bold'>Location:</span> {room.area}, {room.district}</p>
               <p className="price"><span className='font-bold'>Price:</span> {room.price} per month</p>
-              <button className="button">Book Now</button>
+              <button className="button" onClick={handlebook} >Book Now</button>
             </div>
           </div>
         ))}
