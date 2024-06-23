@@ -8,22 +8,33 @@ const Profile = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const [avatarPreview, setAvatarPreview] = useState(null);
     const [updatedUser, setUpdatedUser] = useState(() => {
         const user = JSON.parse(localStorage.getItem('loggedInUser'));
         return {
             name: user.name,
-            email: user.email
+            email: user.email,
+            avatar: user.avatar
         };
     });
 
     const user = JSON.parse(localStorage.getItem('loggedInUser'));
 
     const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setUpdatedUser(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
+        const { name, value, files } = e.target;
+        if (name === 'avatar') {
+            const file = files[0];
+            setUpdatedUser(prevState => ({
+                ...prevState,
+                avatar: file
+            }));
+            setAvatarPreview(URL.createObjectURL(file));
+        } else {
+            setUpdatedUser(prevState => ({
+                ...prevState,
+                [name]: value
+            }));
+        }
     };
 
     const clearMessages = () => {
@@ -35,7 +46,7 @@ const Profile = () => {
         if (error || success) {
             const timer = setTimeout(() => {
                 clearMessages();
-            }, 2000); 
+            }, 2000);
 
             return () => clearTimeout(timer);
         }
@@ -44,16 +55,23 @@ const Profile = () => {
     const handleUpdateProfile = async (e) => {
         e.preventDefault();
         try {
+            const formData = new FormData();
+            for (const key in updatedUser) {
+                formData.append(key, updatedUser[key]);
+            }
+
             const response = await fetch('http://localhost:8000/api/users/updateprofile', {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
-                body: JSON.stringify(updatedUser)
+                body: formData
             });
+
             if (!response.ok) {
                 return setError('Something went wrong from server.');
             }
-            localStorage.setItem('loggedInUser', JSON.stringify(updatedUser));
+
+            const updatedUserResponse = await response.json();
+            localStorage.setItem('loggedInUser', JSON.stringify(updatedUserResponse));
             setSuccess('Profile updated successfully.');
 
             setTimeout(() => {
@@ -86,6 +104,10 @@ const Profile = () => {
         setIsEditing(false);
     };
 
+    const triggerFileInput = () => {
+        document.getElementById('avatarInput').click();
+    };
+
     return (
         <>
           <Nav />
@@ -104,6 +126,20 @@ const Profile = () => {
                 <div className="mt-6 p-6">
                     <h2 className="text-2xl font-bold text-center text-gray-900 mb-4">Update Profile</h2>
                     <div className="flex flex-col items-center">
+                        <img
+                            className="h-24 w-24 rounded-full object-cover cursor-pointer"
+                            src={avatarPreview || user.avatar}
+                            alt={`${user.name}'s avatar`}
+                            onClick={triggerFileInput}
+                        />
+                        <input
+                            id="avatarInput"
+                            type="file"
+                            name="avatar"
+                            accept="image/*"
+                            style={{ display: 'none' }}
+                            onChange={handleInputChange}
+                        />
                         <div className="mb-2 w-full">
                             <label className="block text-gray-200 text-sm font-bold mb-2" htmlFor="name">
                                 Name
@@ -151,7 +187,7 @@ const Profile = () => {
                   <div className="flex items-center justify-center bg-gray-900 p-6">
                     <img 
                         className="h-24 w-24 rounded-full object-cover" 
-                        src='https://th.bing.com/th/id/OIP.audMX4ZGbvT2_GJTx2c4GgHaHw?rs=1&pid=ImgDetMain'
+                        src={user.avatar}
                         alt={`${user.name}'s avatar`}
                     />
                   </div>

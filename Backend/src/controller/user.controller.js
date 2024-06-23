@@ -4,6 +4,7 @@ import { ApiResponse } from '../utils/ApiResponse.js'
 import jwt from 'jsonwebtoken'
 
 import {User} from '../models/user.model.js'
+import { uploadOnCloudinary } from '../utils/cloudinary.js'
 
 const generateAccessToken = async(userId) =>{
     try{
@@ -29,30 +30,41 @@ const registerUser = asyncHandler(async(req,res) => {
     ){
         throw new ApiError(400,"All fields are required.")
     }
+    try {
+        const localFilePath = req.file?.path;
+        if(!localFilePath){
+            throw new ApiError(400,"LocalFile path is found.")
+        }
+        const avatar = await uploadOnCloudinary(localFilePath);
 
-    const userExist = await User.findOne({
-        $or:[{name},{email}]
-    })
-    if(userExist) {
-        throw new ApiError(400 , "User with email or username already exists.")
+        const userExist = await User.findOne({
+            $or:[{name},{email}]
+        })
+        if(userExist) {
+            throw new ApiError(400 , "User with email or username already exists.")
+        }
+        const user = await User.create({
+            name,
+            email,
+            password,
+            userType,
+            avatar:avatar?.url || ""
+        })
+        const createUser = await User.findById(user._id).select(
+            "-password"
+        )
+    
+        if(!createUser){
+            throw new ApiError(500, "Something went wrong while registring the user.")
+        }
+    
+        return res.status(201).json(
+            new ApiResponse(200, createUser , "User registered Successfully.")
+        )
+    } catch (error) {
+        console.log(error);
+        throw new ApiError(404,"Error encouter while registering user.")
     }
-    const user = await User.create({
-        name,
-        email,
-        password,
-        userType
-    })
-    const createUser = await User.findById(user._id).select(
-        "-password"
-    )
-
-    if(!createUser){
-        throw new ApiError(500, "Something went wrong while registring the user.")
-    }
-
-    return res.status(201).json(
-        new ApiResponse(200, createUser , "User registered Successfully.")
-    )
 })
 
 const loginUser = asyncHandler(async(req,res) => {
@@ -157,7 +169,7 @@ const changePassword = asyncHandler(async(req,res) => {
 const updateProfile = asyncHandler(async(req,res) => {
     try {
         const {name,email} = req.body;
-
+        const localFilePath = req.file?.path;
         if(
             [name,email].some((field) => {field?.trim === ''})
         ){
@@ -173,14 +185,19 @@ const updateProfile = asyncHandler(async(req,res) => {
         if(!user){
             throw new ApiError(401, "Invalid Access Token")
         }
+        
+        const avatar = await uploadOnCloudinary(localFilePath);
+        
         user.name = name;
         user.email = email;
+        user.avatar = avatar?.url
         await user.save({validateBeforeSave:false})
 
         res
         .status(200)
         .json(new ApiResponse(200,{user},"user updated successfully"))
     } catch (error) {
+        console.log(error);
         throw new ApiError(404,"something went wrong while updating profile.")
     }
 })

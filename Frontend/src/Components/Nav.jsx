@@ -6,7 +6,7 @@ import logo from '../Images/logo.png';
 
 const Nav = () => {
   const navigate = useNavigate();
-  const [user, setUser] = useState(false);
+  const [user, setUser] = useState('');
   const [userType, setUserType] = useState(null); 
   const [showDropdown, setShowDropdown] = useState(false);
   const [avatarClicked, setAvatarClicked] = useState(false);
@@ -23,7 +23,7 @@ const Nav = () => {
         if (response.status === 200) {
           const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
           if (loggedInUser) {
-            setUser(true);
+            setUser(loggedInUser);
             setUserType(loggedInUser.userType);
           }
         } else {
@@ -80,7 +80,7 @@ const Nav = () => {
     setShowDropdown((prevState) => !prevState);
     setAvatarClicked((prevState) => !prevState);
   };
-
+  console.log(user);
   return (
     <nav className="p-4 shadow-lg bg-gradient-to-r from-gray-100 to-gray-500 z-50">
       <div className="container mx-auto flex justify-between items-center">
@@ -101,9 +101,9 @@ const Nav = () => {
           {user && (
             <button
               onClick={handleDropdownToggle}
-              className={`h-12 w-12 z-50 rounded-full overflow-hidden focus:outline-none transition-colors duration-300 ${avatarClicked ? 'border-4 border-green-800' : 'border-4 border-gray-200'}`}
+              className={`h-12 w-12 z-50 rounded-full overflow-hidden focus:outline-none transition-colors duration-300 ${avatarClicked ? 'border-4 border-green-400' : 'border-4 border-gray-200'}`}
             >
-              <img src="https://th.bing.com/th/id/OIP.oU8cbOKSalCc7pchD_b4tAAAAA?w=474&h=474&rs=1&pid=ImgDetMain" alt="Avatar" className="h-full w-full object-cover z-30" />
+              <img src={user.avatar} alt="Avatar" className="h-full w-full object-cover z-30" />
             </button>
           )}
           {showDropdown && (

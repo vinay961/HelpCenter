@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Register.css'
+import './Register.css';
 
 function Register() {
     const navigate = useNavigate();
@@ -8,29 +8,35 @@ function Register() {
         name: '',
         email: '',
         password: '',
-        userType: ''
+        userType: '',
+        avatar: null
     });
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        const { name, value, files } = e.target;
+        if (name === 'avatar') {
+            setFormData({ ...formData, avatar: files[0] });
+        } else {
+            setFormData({ ...formData, [name]: value });
+        }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
         try {
+            const formDataToSend = new FormData();
+            for (const key in formData) {
+                formDataToSend.append(key, formData[key]);
+            }
+
             const response = await fetch('http://localhost:8000/api/users/register', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
+                body: formDataToSend
             });
             const data = await response.json();
-            // console.log(data);
             if (!response.ok) {
                 setError(data.message || 'Something went wrong');
             } else {
@@ -112,6 +118,17 @@ function Register() {
                                 <option value="seeker">Seeker</option>
                                 <option value="seller">Seller</option>
                             </select>
+                        </div>
+                        <div className="sm:col-span-6">
+                            <label htmlFor="avatar" className="block text-sm font-medium leading-6 text-gray-700">Avatar</label>
+                            <input
+                                id="avatar"
+                                name="avatar"
+                                type="file"
+                                accept="image/*"
+                                onChange={handleChange}
+                                className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 text-gray-900 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            />
                         </div>
                     </div>
 

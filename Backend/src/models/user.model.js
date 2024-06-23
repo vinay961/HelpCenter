@@ -28,6 +28,10 @@ const userSchema = new Schema({
         type: String,
         required:[true,"user-type is requrired."]
     },
+    avatar:{
+        type: String,
+        require: false
+    },
     accessToken:{
         type: String,
         required: false
