@@ -6,17 +6,19 @@ const MessagingComponent = () => {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    const savedMessages = localStorage.getItem('messages');
-    if (savedMessages) {
-      setMessages(JSON.parse(savedMessages));
+    fetchMessages();
+  })
+
+  const fetchMessages = async() => {
+    try {
+      const response = await axios.get()
+      setMessages(response.data);
+    } catch (error) {
+      console.log(error);
     }
-  }, []);
+  }
 
-  useEffect(() => {
-    localStorage.setItem('messages', JSON.stringify(messages));
-  }, [messages]);
-
-const handleSendMessage = (messageText) => {
+const handleSendMessage = async(messageText) => {
     const userJSON = localStorage.getItem('loggedInUser');
     const user = JSON.parse(userJSON);
 
@@ -29,6 +31,14 @@ const handleSendMessage = (messageText) => {
     } else {
         console.error('User not found or user name is missing');
     }
+
+    try {
+      const response = await axios.post()
+      setMessages([...messages,response.data]);
+    } catch (error) {
+      console.log(error);
+    }
+
 };
 
   return (
