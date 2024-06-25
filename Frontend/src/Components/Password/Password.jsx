@@ -23,7 +23,7 @@ const PasswordChange = () => {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ oldpassword: formData.oldpassword, newpassword: formData.newpassword }),
-        credentials:'include'
+        credentials: 'include'
       });
       if (!response.ok) {
         throw new Error('Failed to reset password');
@@ -40,8 +40,8 @@ const PasswordChange = () => {
   return (
     <>
       <Nav />
-      <div className="flex items-center justify-center passwordbody">
-        <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+      <div className="flex items-center justify-center min-h-screen passwordbody">
+        <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full mx-4 sm:mx-8">
           <h2 className="text-2xl font-semibold text-center mb-6">Change Password</h2>
           {error && <div className="mb-4 text-red-500 text-center">{error}</div>}
           {success && <div className="mb-4 text-green-500 text-center">{success}</div>}

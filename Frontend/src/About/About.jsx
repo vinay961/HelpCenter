@@ -16,7 +16,6 @@ const links = [
   
   ]
   
-  
   function About() {
     return (
         <>

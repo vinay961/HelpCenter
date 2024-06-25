@@ -1,8 +1,69 @@
 .profilebody {
     /* height: 89vh; */
     width: 100%;
-    background-image: url('https://img.freepik.com/free-vector/vector-technology-abstract-background-with-particle-lines_53876-111549.jpg?w=996&t=st=1718274614~exp=1718275214~hmac=f1a0faf8ef1c4bd483debecbfe06a592e5480bddafb319986da52935718da12c');
+    background-image: url('https://images.unsplash.com/photo-1497864149936-d3163f0c0f4b?q=80&w=1769&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
     background-blend-mode: overlay;
     background-size: cover;
     background-position: center;
   }
+
+  .profilebody {
+    background-color: #1a202c;
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 100%;
+    width: 100%;
+}
+
+.profile-header, .profile-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.profile-header img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 16px;
+}
+
+.profile-content {
+    padding: 16px;
+}
+
+.profile-content h2, .profile-content p {
+    margin: 8px 0;
+}
+
+.profile-content .profile-actions {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.profile-content .profile-actions button {
+    flex: 1;
+    margin: 0 8px;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .profile-content .profile-actions {
+        flex-direction: column;
+    }
+
+    .profile-content .profile-actions button {
+        margin: 8px 0;
+    }
+    .btn{
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+}

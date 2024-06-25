@@ -37,7 +37,7 @@ const Testimonial = () => {
         autoplaySpeed: 3000,
         responsive: [
             {
-                breakpoint: 768, // Adjust breakpoint as needed
+                breakpoint: 768,
                 settings: {
                     slidesToShow: 1,
                     slidesToScroll: 1,
@@ -46,7 +46,7 @@ const Testimonial = () => {
             {
                 breakpoint: 1024,
                 settings: {
-                    slidesToShow: 2,
+                    slidesToShow: 1,
                     slidesToScroll: 1,
                 },
             },
@@ -54,7 +54,7 @@ const Testimonial = () => {
     };
 
     return (
-        <div className="w-full max-w-lg mx-auto my-12 shadow-lg">
+        <div className="w-full max-w-lg mx-auto my-12 px-4 md:px-0 shadow-lg">
             <hr className="border-t-2 border-gray-300 mb-6" />
             <h3 className="text-3xl text-center mb-6 text-gray-500">Customer Reviews</h3>
             <Slider {...settings} className="mx-auto">

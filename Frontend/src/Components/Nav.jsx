@@ -101,7 +101,7 @@ const Nav = () => {
           {user && (
             <button
               onClick={handleDropdownToggle}
-              className={`h-12 w-12 z-50 rounded-full overflow-hidden focus:outline-none transition-colors duration-300 ${avatarClicked ? 'border-4 border-green-400' : 'border-4 border-gray-200'}`}
+              className={`h-12 w-12 z-50 rounded-full overflow-hidden focus:outline-none transition-colors duration-300 ${avatarClicked ? 'border-4 border-gray-200' : 'border-4 border-gray-500'}`}
             >
               <img src={user.avatar} alt="Avatar" className="h-full w-full object-cover z-30" />
             </button>

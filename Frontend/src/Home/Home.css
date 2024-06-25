@@ -7,5 +7,11 @@
     background-position: center;
     filter: brightness(0.7) contrast(1.9);
   }
+  @media (max-width: 768px){
+    .body{
+      height: auto;
+    }
+  }
+
 
   

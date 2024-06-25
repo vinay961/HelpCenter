@@ -18,7 +18,7 @@ const Profile = () => {
         };
     });
 
-    const user = JSON.parse(localStorage.getItem('loggedInUser'));
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('loggedInUser')));
 
     const handleInputChange = (e) => {
         const { name, value, files } = e.target;
@@ -71,8 +71,12 @@ const Profile = () => {
             }
 
             const updatedUserResponse = await response.json();
+            // console.log(updatedUserResponse);
             localStorage.setItem('loggedInUser', JSON.stringify(updatedUserResponse));
             setSuccess('Profile updated successfully.');
+            const currUser = localStorage.getItem('loggedInUser')
+            console.log(currUser);
+            setUser(currUser); 
 
             setTimeout(() => {
                 setIsEditing(false);
@@ -124,10 +128,10 @@ const Profile = () => {
             )}
             {isEditing ? (
                 <div className="mt-6 p-6">
-                    <h2 className="text-2xl font-bold text-center text-gray-900 mb-4">Update Profile</h2>
+                    <h2 className="text-2xl font-bold text-center text-gray-200 mb-4">Update Profile</h2>
                     <div className="flex flex-col items-center">
                         <img
-                            className="h-24 w-24 rounded-full object-cover cursor-pointer"
+                            className="h-24 w-24 mb-4 rounded-full object-cover cursor-pointer border-2 border-white"
                             src={avatarPreview || user.avatar}
                             alt={`${user.name}'s avatar`}
                             onClick={triggerFileInput}
@@ -140,7 +144,9 @@ const Profile = () => {
                             style={{ display: 'none' }}
                             onChange={handleInputChange}
                         />
+                        
                         <div className="mb-2 w-full">
+                        <hr className="border-t-2 border-gray-300 mb-6" />
                             <label className="block text-gray-200 text-sm font-bold mb-2" htmlFor="name">
                                 Name
                             </label>
@@ -168,40 +174,41 @@ const Profile = () => {
                                 placeholder="Email"
                             />
                         </div>
-                        <button
-                            className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mb-2 transform transition-transform duration-500 hover:scale-105"
-                            onClick={handleUpdateProfile}
-                        >
-                            Save Changes
-                        </button>
-                        <button
-                            className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transform transition-transform duration-500 hover:scale-105"
-                            onClick={handleBack}
-                        >
-                            Back
-                        </button>
+                        <div  className='mt-6 btn'>
+                            <button
+                                className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transform transition-transform duration-500 hover:scale-105"
+                                onClick={handleUpdateProfile}
+                            >
+                                Save Changes
+                            </button>
+                            <button
+                                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transform transition-transform duration-500 hover:scale-105"
+                                onClick={handleBack}
+                            >
+                                Back
+                            </button>
+                        </div>
                     </div>
                 </div>
             ) : (
                 <>
-                  <div className="flex items-center justify-center bg-gray-900 p-6">
+                  <div className="profile-header">
                     <img 
-                        className="h-24 w-24 rounded-full object-cover" 
+                        className="h-24 w-24 rounded-full object-cover border-2 border-white" 
                         src={user.avatar}
                         alt={`${user.name}'s avatar`}
                     />
                   </div>
-                  <div className="p-6">
-                    <div className="text-center">
-                        <h2 className="text-2xl font-bold text-gray-100">Name-{user.name}</h2>
-                        <p className="text-xl text-gray-500">Role-{user.userType}</p>
+                  <hr className="border-t-2 border-gray-300 mb-6" />
+                  <div className="profile-content">
+                    <div>
+                        <h2 className="text-2xl font-bold text-gray-100">Name: {user.name}</h2>
+                        <p className="text-xl text-gray-500">Role: {user.userType}</p>
                     </div>
                     <div className="mt-4">
-                        <div className="text-center">
-                            <p className="text-lg text-gray-200"><span className="font-semibold">Email:</span> {user.email}</p>
-                        </div>
+                        <p className="text-lg text-gray-200"><span className="font-semibold">Email:</span> {user.email}</p>
                     </div>
-                    <div className="mt-6 flex justify-around">
+                    <div className="mt-6 profile-actions">
                         <button onClick={handleDelete} className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transform transition-transform duration-500 hover:scale-105">
                             Delete Profile
                         </button>
