@@ -30,6 +30,7 @@ const Nav = () => {
           localStorage.removeItem('loggedInUser');
           setUser(false);
           setUserType(null); 
+          navigate('/')
         }
       } catch (error) {
         console.error('Error checking authentication:', error);

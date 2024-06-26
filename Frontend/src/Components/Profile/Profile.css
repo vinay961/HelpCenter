@@ -1,3 +1,6 @@
+.pb{
+    height: 100vh;
+}
 .profilebody {
     /* height: 89vh; */
     width: 100%;
@@ -51,6 +54,10 @@
     flex: 1;
     margin: 0 8px;
 }
+.btn{
+    display: flex;
+    gap: 30px;
+}
 
 /* Responsive design for smaller screens */
 @media (max-width: 768px) {
@@ -65,5 +72,8 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
+    }
+    .profilebody{
+        margin: 10px;
     }
 }

@@ -113,7 +113,7 @@ const Profile = () => {
     };
 
     return (
-        <>
+        <div className="bg-gradient-to-r from-gray-800 via-gray-600 to-gray-800 pb">
           <Nav />
           <div className="max-w-lg mx-auto shadow-lg rounded-lg overflow-hidden mt-10 profilebody">
             {error && (
@@ -177,15 +177,15 @@ const Profile = () => {
                         <div  className='mt-6 btn'>
                             <button
                                 className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transform transition-transform duration-500 hover:scale-105"
-                                onClick={handleUpdateProfile}
-                            >
-                                Save Changes
-                            </button>
-                            <button
-                                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transform transition-transform duration-500 hover:scale-105"
                                 onClick={handleBack}
                             >
                                 Back
+                            </button>
+                            <button
+                                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transform transition-transform duration-500 hover:scale-105"
+                                onClick={handleUpdateProfile}
+                            >
+                                Save Changes
                             </button>
                         </div>
                     </div>
@@ -223,7 +223,7 @@ const Profile = () => {
                 </>
             )}
           </div>
-        </>
+        </div>
     );
 };
 

@@ -23,7 +23,7 @@ function Login() {
     };
 
     useEffect(() => {
-        return () => clearTimeout(timeoutId); // Cleanup on unmount
+        return () => clearTimeout(timeoutId); 
     }, []);
 
     const handleSubmit = async (e) => {
@@ -72,7 +72,7 @@ function Login() {
                 clearMessages();
                 setTimeout(() => {
                     navigate('/');
-                }, 2000);
+                }, 1000);
             } catch (err) {
                 console.error(err);
                 setError('Invalid email or password');
