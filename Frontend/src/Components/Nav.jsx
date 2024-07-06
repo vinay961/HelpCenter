@@ -81,7 +81,7 @@ const Nav = () => {
     setShowDropdown((prevState) => !prevState);
     setAvatarClicked((prevState) => !prevState);
   };
-  console.log(user);
+  // console.log(user);
   return (
     <nav className="p-4 shadow-lg bg-gradient-to-r from-gray-100 to-gray-500 z-50">
       <div className="container mx-auto flex justify-between items-center">

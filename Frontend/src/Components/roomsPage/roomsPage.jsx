@@ -1,29 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './roomsPage.css';
 
 const RoomList = () => {
   const [rooms, setRooms] = useState([]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const handlebook = () => {
-    const user = localStorage.getItem('loggedInUser')
+  const handleBook = (roomId) => {
+    const user = localStorage.getItem('loggedInUser');
 
-    if(user){
-      navigate('/book')
+    if (user) {
+      navigate('/book', { state: { roomId } });
+    } else {
+      navigate('/login');
     }
-    else{
-      navigate('/login')
-    }
-  }
+  };
 
   useEffect(() => {
     const fetchRooms = async () => {
       try {
         const response = await axios.get('http://localhost:8000/api/rooms/getrooms');
         const sortedRooms = response.data.data.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
-        console.log(sortedRooms);
+        // console.log(sortedRooms);
         setRooms(sortedRooms);
       } catch (error) {
         console.error('Error fetching rooms:', error);
@@ -59,7 +58,7 @@ const RoomList = () => {
               </div>
               <p className="location"><span className='font-bold'>Location:</span> {room.area}, {room.district}</p>
               <p className="price"><span className='font-bold'>Price:</span> {room.price} per month</p>
-              <button className="button" onClick={handlebook} >Book Now</button>
+              <button className="button" onClick={() => handleBook(room.id)}>Book Now</button>
             </div>
           </div>
         ))}

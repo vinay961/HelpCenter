@@ -31,7 +31,7 @@ const EditRoom = () => {
     if (e.target.type === 'file') {
       setRoom({
         ...room,
-        roomImage: e.target.files[0], // Store file object in state
+        roomImage: e.target.files[0],
       });
     } else {
       setRoom({
@@ -51,7 +51,7 @@ const EditRoom = () => {
     e.preventDefault();
     try {
       const formData = new FormData();
-      formData.append('roomImage', room.roomImage); // Append file to FormData
+      formData.append('roomImage', room.roomImage);
       formData.append('gender', room.gender);
       formData.append('roomType', room.roomType);
       formData.append('message', room.message);
@@ -66,7 +66,7 @@ const EditRoom = () => {
       if (response.status === 200) {
         setSuccessMessage('Room details updated successfully.');
         setTimeout(() => {
-          navigate(-1); // Go back to previous page
+          navigate(-1); 
         }, 2000);
       } else {
         setErrorMessage('Failed to update room details.');

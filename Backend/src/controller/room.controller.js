@@ -9,43 +9,48 @@ import { uploadOnCloudinary } from '../utils/cloudinary.js';
 import path from 'path'
 
 const roomRegister = asyncHandler(async (req, res) => {
-    const { area, district, state, phoneNumber, message, price, gender, roomType } = req.body;
+    try {
+        const { area, district, state, phoneNumber, message, price, gender, roomType } = req.body;
 
-    if ([area, district, state, phoneNumber,price,gender].some(field => field?.trim() === '')) {
-        throw new ApiError(401, "All fields are required.");
-    }
-    const localFilePath = req.file?.path;
-
-    const token = req.cookies?.accessToken;
-    if (!token) {
-        throw new ApiError(400, "Unauthorized request");
-    }
-    const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-    const user = await User.findById(decodedToken?._id);
-    if (!user) {
-        throw new ApiError(401, "Invalid Access Token");
-    }
-    const roomImage = await uploadOnCloudinary(localFilePath)
-
-    const room = await Room.create({
-        area,
-        district,
-        state,
-        roomImage:roomImage?.url || "",
-        phoneNumber,
-        message,
-        gender,
-        roomType,
-        price,
-        user: {
-            id: user._id,
-            name: user.name
+        if ([area, district, state, phoneNumber,price,gender].some(field => field?.trim() === '')) {
+            throw new ApiError(401, "All fields are required.");
         }
-    });
+        const localFilePath = req.file?.path;
 
-    res
-    .status(201)
-    .json(new ApiResponse(201, {room}, "Room registered successfully"));
+        const token = req.cookies?.accessToken;
+        if (!token) {
+            throw new ApiError(400, "Unauthorized request");
+        }
+        const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+        const user = await User.findById(decodedToken?._id);
+        if (!user) {
+            throw new ApiError(401, "Invalid Access Token");
+        }
+        const roomImage = await uploadOnCloudinary(localFilePath)
+
+        const room = await Room.create({
+            area,
+            district,
+            state,
+            roomImage:roomImage?.url || "",
+            phoneNumber,
+            message,
+            gender,
+            roomType,
+            price,
+            user: {
+                id: user._id,
+                name: user.name
+            }
+        });
+
+        res
+        .status(201)
+        .json(new ApiResponse(201, {room}, "Room registered successfully"));
+    } catch (error) {
+        console.log(error);
+        throw new ApiError(404,"Error occur during registration of rooms.")
+    }
 });
 
 const getRooms = asyncHandler(async(req,res) => {
@@ -151,9 +156,9 @@ const filterRoom = asyncHandler(async(req,res) => {
               { 'state': location },
             ],
         };
-        console.log(query);
+        // console.log(query);
         const rooms = await Room.find(query);
-        console.log(rooms);
+        // console.log(rooms);
 
         const uniqueRooms = rooms.reduce((acc, room) => {
         if (!acc.find(r => r._id.equals(room._id))) {
