@@ -19,7 +19,7 @@ const PasswordChange = () => {
     setError('');
     setSuccess('');
     try {
-      const response = await fetch('http://localhost:8000/api/users/changepassword', {
+      const response = await fetch('https://helpcenter-66d7.onrender.com/api/users/changepassword', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ oldpassword: formData.oldpassword, newpassword: formData.newpassword }),

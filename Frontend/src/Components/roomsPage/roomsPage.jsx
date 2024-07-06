@@ -20,7 +20,7 @@ const RoomList = () => {
   useEffect(() => {
     const fetchRooms = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/rooms/getrooms');
+        const response = await axios.get('https://helpcenter-66d7.onrender.com/api/rooms/getrooms');
         const sortedRooms = response.data.data.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
         // console.log(sortedRooms);
         setRooms(sortedRooms);

@@ -41,7 +41,7 @@ export default function Contact() {
 
     try {
       console.log(data);
-      const response = await fetch('http://localhost:8000/api/rooms/roomregister', {
+      const response = await fetch('https://helpcenter-66d7.onrender.com/api/rooms/roomregister', {
         method: 'POST',
         body: data,
         credentials: 'include',

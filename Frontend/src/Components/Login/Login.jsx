@@ -31,7 +31,7 @@ function Login() {
         if (isForgotPassword) {
             // Handle forgot password logic
             try {
-                const response = await fetch('http://localhost:8000/api/users/resetpassword', {
+                const response = await fetch('https://helpcenter-66d7.onrender.com/api/users/resetpassword', {
                     method: 'PATCH',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email: formData.email, newpassword: formData.newPassword })
@@ -55,7 +55,7 @@ function Login() {
         } else {
             // Handle login logic
             try {
-                const response = await fetch('http://localhost:8000/api/users/login', {
+                const response = await fetch('https://helpcenter-66d7.onrender.com/api/users/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     credentials: 'include',

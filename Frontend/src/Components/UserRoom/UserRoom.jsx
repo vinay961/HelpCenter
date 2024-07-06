@@ -10,7 +10,7 @@ const UserRooms = () => {
   useEffect(() => {
     const fetchUserRooms = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/rooms/userRoom', {
+        const response = await axios.get('https://helpcenter-66d7.onrender.com/api/rooms/userRoom', {
           withCredentials: true,
         });
         console.log(response);
@@ -31,7 +31,7 @@ const UserRooms = () => {
 
   const handleDelete = async (roomId) => {
     try {
-      const response = await axios.delete(`http://localhost:8000/api/rooms/deleteroom/${roomId}`, {
+      const response = await axios.delete(`https://helpcenter-66d7.onrender.com/api/rooms/deleteroom/${roomId}`, {
         withCredentials: true,
       });
 

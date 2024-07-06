@@ -59,7 +59,7 @@ const EditRoom = () => {
       formData.append('district', room.district);
       formData.append('price', room.price);
 
-      const response = await axios.put(`http://localhost:8000/api/rooms/updateroom/${room._id}`, formData, {
+      const response = await axios.put(`https://helpcenter-66d7.onrender.com/api/rooms/updateroom/${room._id}`, formData, {
         withCredentials: true,
       });
 

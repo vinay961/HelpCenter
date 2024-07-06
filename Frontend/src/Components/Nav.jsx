@@ -15,7 +15,7 @@ const Nav = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/users/checkauth', {
+        const response = await fetch('https://helpcenter-66d7.onrender.com/api/users/checkauth', {
           method: 'GET',
           credentials: 'include',
         });
@@ -57,7 +57,7 @@ const Nav = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/users/logout', {
+      const response = await fetch('https://helpcenter-66d7.onrender.com/api/users/logout', {
         method: 'POST',
         credentials: 'include',
       });

@@ -60,7 +60,7 @@ const Profile = () => {
                 formData.append(key, updatedUser[key]);
             }
 
-            const response = await fetch('http://localhost:8000/api/users/updateprofile', {
+            const response = await fetch('https://helpcenter-66d7.onrender.com/api/users/updateprofile', {
                 method: 'PUT',
                 credentials: 'include',
                 body: formData
@@ -88,7 +88,7 @@ const Profile = () => {
 
     const handleDelete = async () => {
         try {
-            const response = await fetch('http://localhost:8000/api/users/deleteprofile', {
+            const response = await fetch('https://helpcenter-66d7.onrender.com/api/users/deleteprofile', {
                 method: 'DELETE',
                 credentials: 'include'
             });

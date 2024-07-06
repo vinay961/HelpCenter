@@ -19,7 +19,7 @@ const MessagingComponent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8000/api/messages', {
+      const response = await axios.post('https://helpcenter-66d7.onrender.com/api/messages', {
         message,
         roomBooked,
         roomId,

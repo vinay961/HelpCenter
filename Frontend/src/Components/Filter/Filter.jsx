@@ -13,7 +13,7 @@ function FilteredRooms() {
 
       for (let part of locationParts) {
         try {
-          const response = await fetch(`http://localhost:8000/api/rooms/filterRoom?location=${encodeURIComponent(part)}`);
+          const response = await fetch(`https://helpcenter-66d7.onrender.com/api/rooms/filterRoom?location=${encodeURIComponent(part)}`);
           const data = await response.json();
           allRooms = [...allRooms, ...data.data.uniqueRooms];
           console.log(allRooms);
