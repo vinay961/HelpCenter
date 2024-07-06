@@ -91,11 +91,11 @@ const Nav = () => {
         </div>
 
         {/* Navigation Links */}
-        <div className="text-xl hidden md:flex space-x-7 ml-8 z-20">
+        {/* <div className="text-xl hidden md:flex space-x-7 ml-8 z-20">
           <a href="/" className="nav-link">Home</a>
           <a href="/about" className="nav-link">About</a>
           <a href="/contact" className="nav-link">Contact Me</a>
-        </div>
+        </div> */}
 
         {/* Avatar and Dropdown */}
         <div className="relative z-20 ml-16" ref={dropdownRef}>
