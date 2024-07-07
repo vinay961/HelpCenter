@@ -19,7 +19,7 @@ const Nav = () => {
           method: 'GET',
           credentials: 'include',
         });
-        
+        console.log(response);
         if (response.status === 200) {
           const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
           if (loggedInUser) {

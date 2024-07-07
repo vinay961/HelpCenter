@@ -90,7 +90,7 @@ const loginUser = asyncHandler(async(req,res) => {
         httpOnly: true,
         secure: true
     }
-
+    console.log(loggedInUser);
     return res
     .status(200)
     .cookie("accessToken",accessToken,options)
@@ -228,6 +228,7 @@ const checkAuth = asyncHandler(async(req,res) => {
     if(!token){
         throw new ApiError(401 , "Unauthorized request")
     }
+    console.log(token);
     const decodedToken = jwt.verify(token,process.env.ACCESS_TOKEN_SECRET)  // basically return payload that we mentioned while creating token.
     res.clearCookie(token);
     const user = await User.findById(decodedToken?._id);

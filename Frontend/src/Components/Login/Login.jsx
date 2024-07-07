@@ -36,6 +36,7 @@ function Login() {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email: formData.email, newpassword: formData.newPassword })
                 });
+                console.log(response);
 
                 if (!response.ok) {
                     throw new Error('Failed to reset password');
