@@ -8,6 +8,7 @@
     background-blend-mode: overlay;
     background-size: cover;
     background-position: center;
+    margin: 10px;
   }
 
   .profilebody {
@@ -75,5 +76,7 @@
     }
     .profilebody{
         margin: 10px;
+        background-image: none;
+        background-color: transparent;
     }
 }
