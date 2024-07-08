@@ -84,7 +84,7 @@ function Login() {
 
     return (
         <div className="min-h-screen flex items-center justify-center loginbody">
-            <div className="max-w-md w-full bg-gray-300 rounded-lg shadow-lg p-8">
+            <div className="max-w-md w-full bg-gray-300 rounded-lg shadow-lg p-8 logincontainer">
                 {error && <div className="mb-4 text-red-500 text-center">{error}</div>}
                 {success && <div className="mb-4 text-green-500 text-center">{success}</div>}
 
