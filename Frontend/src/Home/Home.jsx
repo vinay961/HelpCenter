@@ -20,7 +20,7 @@ function Home() {
   return (
     <>
       <div className='body flex flex-col min-h-screen'>
-        {/* <Nav /> */}
+        <Nav />
         <div className="flex flex-col items-center flex-grow">
           <h1 className="text-3xl font-bold mb-6 mt-16 text-center">Discover Rooms by Location</h1>
           <div className="flex flex-col sm:flex-row gap-2 mb-6 flex-wrap justify-center">
