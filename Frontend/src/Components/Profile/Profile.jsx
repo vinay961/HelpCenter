@@ -114,7 +114,7 @@ const Profile = () => {
 
     return (
         <div className="bg-gradient-to-r from-gray-800 via-gray-600 to-gray-800 pb">
-          <Nav />
+          {/* <Nav /> */}
           <div className="max-w-lg mx-auto shadow-lg rounded-lg overflow-hidden mt-10 profilebody">
             {error && (
                 <div className="bg-red-500 text-white text-center py-2 px-4 mb-4">

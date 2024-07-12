@@ -39,7 +39,7 @@ const PasswordChange = () => {
 
   return (
     <>
-      <Nav />
+      {/* <Nav /> */}
       <div className="flex items-center justify-center min-h-screen passwordbody">
         <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full mx-4 sm:mx-8">
           <h2 className="text-2xl font-semibold text-center mb-6">Change Password</h2>
