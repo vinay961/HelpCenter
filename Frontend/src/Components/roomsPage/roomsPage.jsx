@@ -5,6 +5,7 @@ import './roomsPage.css';
 
 const RoomList = () => {
   const [rooms, setRooms] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const handleBook = (roomId) => {
@@ -26,11 +27,21 @@ const RoomList = () => {
         setRooms(sortedRooms);
       } catch (error) {
         console.error('Error fetching rooms:', error);
+      } finally {
+        setLoading(false); // Set loading to false once the data is fetched
       }
     };
 
     fetchRooms();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <div className="loading-spinner"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="roompagebody mx-auto text-white">
