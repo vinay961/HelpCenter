@@ -6,6 +6,16 @@ function FilteredRooms() {
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const handleBook = (roomId) => {
+    const user = localStorage.getItem('loggedInUser');
+
+    if (user) {
+      navigate('/book', { state: { roomId } });
+    } else {
+      navigate('/login');
+    }
+  };
+
   useEffect(() => {
     const fetchRooms = async () => {
       const locationParts = location.split(',').map(part => part.trim());
@@ -71,7 +81,7 @@ function FilteredRooms() {
                 </div>
                 <p className="location"><span className='font-bold'>Location:</span> {room.area}, {room.district}</p>
                 <p className="price"><span className='font-bold'>Price:</span> {room.price} per month</p>
-                <button className="button">Book Now</button>
+                <button className="button" onClick={() => handleBook(room.id)}>Book Now</button>
               </div>
             </div>
           ))
