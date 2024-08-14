@@ -71,7 +71,6 @@ const Profile = () => {
             }
 
             const updatedUserResponse = await response.json();
-            // console.log(updatedUserResponse);
             localStorage.setItem('loggedInUser', JSON.stringify(updatedUserResponse));
             setSuccess('Profile updated successfully.');
             const currUser = localStorage.getItem('loggedInUser')

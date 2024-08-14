@@ -26,7 +26,7 @@ function FilteredRooms() {
           const response = await fetch(`https://helpcenter-66d7.onrender.com/api/rooms/filterRoom?location=${encodeURIComponent(part)}`);
           const data = await response.json();
           allRooms = [...allRooms, ...data.data.uniqueRooms];
-          console.log(allRooms);
+          // console.log(allRooms);
         } catch (error) {
           console.error('Error fetching rooms:', error);
         }
@@ -43,7 +43,7 @@ function FilteredRooms() {
       const uniqueRooms = Array.from(uniqueRoomsMap.values());
 
       setRooms(uniqueRooms);
-      console.log(rooms);
+      // console.log(rooms);
       setLoading(false);
     };
 
@@ -51,7 +51,7 @@ function FilteredRooms() {
   }, [location]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div class="text-center font-bold mt-30">Loading...</div>;
   }
 
   return (
