@@ -19,4 +19,7 @@ app.use('/api/users',userRouter)
 import roomRouter from './router/room.route.js'
 app.use('/api/rooms/',roomRouter)
 
+import messageRouter from './router/message.route.js'
+app.use('/api',messageRouter)
+
 export {app}
